@@ -93,15 +93,18 @@ if __name__ == '__main__':
 	knownClient = None
 	knownServer = (SERVER, SERVER_PORT)
 	while True:
-		data, addr = s.recvfrom(65535)
-
-		if addr == knownServer:
-			result, data = decrypt(data)
-			if not result or knownClient is None:
-				continue
-			s.sendto(data, knownClient)
-		else:
-			knownClient = addr
+        try:
+		    data, addr = s.recvfrom(65535)
+            
+		    if addr == knownServer:
+		    	result, data = decrypt(data)
+			if no    t result or knownClient is None:
+		    		continue
+		    	s.sendto(data, knownClient)
+		    else:
+		    	knownClient = addr
 			s.sendto(encrypt(data), knownServer)
-
+        except Exception as ex:
+            print(ex)
+            
 
