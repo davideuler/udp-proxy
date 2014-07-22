@@ -6,7 +6,7 @@
 
 import os
 import hashlib
-import sys 
+import sys
 import socket
 import struct
 import string
@@ -60,7 +60,7 @@ def decrypt(data):
 
 if __name__ == '__main__':
 	os.chdir(os.path.dirname(__file__) or '.')
-	
+
 	try:
 		with open('config.json', 'rb') as f:
 			config = json.load(f)
@@ -93,18 +93,18 @@ if __name__ == '__main__':
 	knownClient = None
 	knownServer = (SERVER, SERVER_PORT)
 	while True:
-        try:
+            try:
 		    data, addr = s.recvfrom(65535)
-            
+
 		    if addr == knownServer:
 		    	result, data = decrypt(data)
-			if no    t result or knownClient is None:
+			if not result or knownClient is None:
 		    		continue
 		    	s.sendto(data, knownClient)
 		    else:
 		    	knownClient = addr
 			s.sendto(encrypt(data), knownServer)
-        except Exception as ex:
-            print(ex)
-            
+            except Exception as ex:
+                print(ex)
+
 
